@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Page not Found{% endblock title %}
+
+{% block head %}
+
+    <style>
+        body {
+          font-family: 'Poppins', sans-serif;
+        }
+
+        .navbar-brand {
+          font-size: 1.8rem;
+          font-family: 'Limelight', cursive;
+          font-weight: 600;
+        }
+
+        .nav-item {
+          font-family: 'Poppins', sans-serif;
+        }
+
+
+        h1 {
+          font-family: 'Cormorant Garamond', serif;
+        }
+    </style>
+
+{% endblock head %}
+
+{% block content %}
+
+    {% include 'nav.html' %}
+
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                aria-current="true" aria-label="Slide 1"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active d-block">
+                <div class="text-center mt-5 d-block d-md-none text-dark ">
+                    <h1>404 Not Found</h1>
+                    <p>Sorry, we can't find the page you are looking for.</p>
+                </div>
+                <img src="{{MEDIA_URL}}/404.jpg" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block text-dark position-absolute top-0">
+                    <h1>404 Not Found</h1>
+                    <p>Sorry, we can't find the page you are looking for.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+
+{% block title %}Cart - La Ropa{% endblock title %}
+
+{% block head %}
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .navbar-brand {
+      font-size: 1.8rem;
+      font-family: 'Limelight', cursive;
+      font-weight: 600;
+    }
+
+    .nav-item {
+      font-family: 'Poppins', sans-serif;
+    }
+
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    a {
+      text-decoration: none;
+      color: #000;
+    }
+
+    a:hover {
+      color: #000;
+      font-weight: bold;
+    }
+  </style>
+{% endblock head %}
+
+{% block content %}
+  
+  {% include 'nav.html' %}
+
+  {% load cart %}
+  <!-- CART -->
+  <section>
+    <!--Grid row-->
+    <div class="row container-fluid my-1">
+      <!--Grid column-->
+      <div class="col-lg-9">
+        <!-- Card -->
+        <div class="mb-3 border-end pe-4">
+          <div class="pt-4 wish-list">
+            <h2 class="mb-4">Cart (<span>{{ request.session.cart.keys|length }}</span> items)</h2>
+            <!--Iterable part start-->
+            {% for item in cart_prod %}
+            <div class="row mb-4">
+              <div class="col-md-5 col-lg-3 col-xl-3">
+                <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
+                  <img class="img-fluid w-100"
+                    src="{{ item.img1.url }}" alt="Sample">
+                </div>
+              </div>
+              <div class="col-md-7 col-lg-9 col-xl-9">
+                <div>
+                  <div class="d-flex justify-content-between">
+                    <div>
+                      <h3>{{ item.title }}</h3>
+                      <p class="mb-3 text-muted text-uppercase lead">Size: {{ item.size }}</p>
+                      <p class="mb-3 text-muted text-uppercase lead">Quantity: {{ item|cart_count:request.session.cart }}</p>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <form action="" method="POST">{% csrf_token %}
+                        <i class="fas fa-trash-alt mr-1"></i>
+                        <input hidden type="text" name="to_cart" value="{{ item.id }}">
+                        <input hidden type="text" name="rem_cart" value="True">
+                        <input type="submit" class="card-link-secondary text-uppercase mr-3" value="Remove Item" >
+                      </form>
+                    </div>
+                    <p class="mb-0"><span><strong id="summary">
+                      ${% multiply item.price item|cart_count:request.session.cart %}
+                    </strong></span></p class="mb-0">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="mb-4">
+            {% endfor %}
+            <!--Iterable part end-->
+          </div>
+        </div>
+      </div>
+      <!--Grid column-->
+      <!--Grid column-->
+      <div class="col-lg-3">
+        <!-- Card -->
+        <div class="mb-3 mt-3">
+          <div class="pt-4">
+            <h5 class="mb-3">The total amount of</h5>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                Shipping amount
+                {% if request.session.cart.keys|length == 0 %}
+                <span>$0.00</span>
+                {% else %}
+                <span>$5.00</span>
+                {% endif %}
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                Shipping by
+                <span>Gratis</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                <div>
+                  <strong>The total amount of</strong>
+                </div>
+                {% if request.session.cart.keys|length == 0 %}
+                <span><strong>${{ cart_prod|total_price:request.session.cart }}</strong></span>
+                {% else %}
+                <span><strong>${{ cart_prod|total_price_ship:request.session.cart }}</strong></span>
+                {% endif %}
+              </li>
+            </ul>
+            <form method="POST"> {% csrf_token %}
+
+            {% if request.session.cart.keys|length == 0  %}
+              <button type="submit" name="checkout_but" class="btn btn-dark btn-block" disabled = "disabled" value=True>
+              
+              Go to checkout
+              
+              </button>
+
+            {% else %}
+              <button type="submit" name="checkout_but" class="btn btn-dark btn-block" value=True>
+              
+              Go to checkout
+              
+              </button>
+            {% endif %}
+
+            </form>
+          </div>
+        </div>
+      </div>
+      <!--Grid column-->
+    </div>
+    <!-- Grid row -->
+    <br><br><br>
+  </section>
+{% endblock content %}
+  
+
+  

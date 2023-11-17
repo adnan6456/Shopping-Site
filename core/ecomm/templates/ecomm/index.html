@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}Shopping Site{% endblock title %}
+
+{% block head %}
+
+    <style>
+         body {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-family: 'Limelight', cursive;
+            font-weight: 600;
+        }
+
+        .nav-item {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        a {
+            text-decoration: none;
+            color: #000;
+            display: inline;
+        }
+
+        a:hover{
+            color: black;
+            text-decoration: none;
+        }
+
+        .prod:hover {
+            color: white;
+        }
+    </style>
+
+{% endblock head %}
+
+{% block content %}
+    
+    {% include 'nav.html' %}
+
+    <!-- ADD CODE HERE -->
+    <div class="container-fluid" style="position: relative; top: -30vw;">
+        <img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=750&q=80"
+            alt="" class="img-fluid" style="width: 100vw;">
+        <div class="row my-4" style="background-color: #fff;">
+            <!-- FOR LARGER SCREEN SIZES -->
+            <div class="col-lg-2">
+                <div class="btn-group-vertical d-none d-lg-block border-end ms-5 mt-5 px-3 pt-4" role="group">
+                    <a href="/Products" type="button" class="btn btn-outline-dark prod">All</a>
+                    <a href="/Products?category=SH" type="button" class="btn btn-outline-dark prod">Shirts</a>
+                    <a href="/Products?category=TS" type="button" class="btn btn-outline-dark prod">Tees</a>
+                    <a href="/Products?category=TR" type="button" class="btn btn-outline-dark prod">Pants</a>
+                </div>
+                <!-- FOR SMALLER SCREEN SIZES -->
+                <div class="btn-group d-block d-lg-none mt-3 px-0 py-4" role="group">
+                    <a href="/Products" type="button" class="btn btn-outline-dark prod">All</a>
+                    <a href="/Products?category=SH" type="button" class="btn btn-outline-dark prod">Shirts</a>
+                    <a href="/Products?category=TS" type="button" class="btn btn-outline-dark prod">Tees</a>
+                    <a href="/Products?category=TR" type="button" class="btn btn-outline-dark prod">Pants</a>
+                    <hr>
+                </div>
+            </div>
+            <div class="col-lg-10">
+                <h1 class="display-3">Products</h1>
+                <div class="row my-4 container-fluid">
+                    <!--Iterable part starts-->
+                    {% for product in products %}
+                    <div class="col-sm-6 col-md-4 my-2">
+                        <a href="product/{{ product.id }}">
+                            <div class="card" style="width: 90%;">
+                                <img src="{{ product.img1.url }}" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                    <h2 class="lead" style="font-weight: bold;">{{ product.title }}</h2>
+                                    <p class="card-text">${{ product.price }}</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                    <!--Iterable part ends-->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

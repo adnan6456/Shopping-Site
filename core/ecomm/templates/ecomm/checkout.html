@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block title %}Checkout Page{% endblock title %}
+
+{% block head %}
+
+    <style>
+        body {
+          font-family: 'Poppins', sans-serif;
+        }
+
+        .navbar-brand {
+          font-size: 1.8rem;
+          font-family: 'Limelight', cursive;
+          font-weight: 600;
+        }
+
+        .nav-item {
+          font-family: 'Poppins', sans-serif;
+        }
+
+
+        h1 {
+          font-family: 'Cormorant Garamond', serif;
+        }
+    </style>
+
+{% endblock head %}
+
+{% block content %}
+
+    {% include 'nav.html' %}
+
+    <form method="POST"> {% csrf_token %}
+        <div class="container-fluid row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <h1 class="display-5">Billing Address</h1>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" value="{{request.user.email}}"
+                                required>
+                            <label for="floatingInput">Email address</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input name="phone" type="text" class="form-control" id="floatingInput" placeholder="Contact Number" value="{{request.user.userprofile.phone}}" required>
+                            <label for="floatingInput">Phone</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <br>
+                <div class="form-floating mb-3">
+                    <input name="address" type="text" class="form-control" id="floatingInput" placeholder="Address" value="{{request.user.userprofile.address}}" required>
+                    <label for="floatingInput">Address</label>
+                </div>
+                <br>
+                <hr>
+                <br>
+                <h1>Payment Details</h1>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input name="card_name" type="text" class="form-control" id="floatingInput" placeholder="Name on Card"
+                                required>
+                            <label for="floatingInput">Name on Card</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-3">
+                            <input name="card_number" type="text" class="form-control" id="floatingInput" placeholder="Credit Card Number"
+                                required>
+                            <label for="floatingInput">Card Number</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="form-floating mb-3">
+                            <input type="month" min="2021-07" class="form-control" id="floatingInput"
+                                placeholder="Expiration" required>
+                            <label for="floatingInput">Expiration</label>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-floating mb-3">
+                            <input name="card_cvv" type="password" class="form-control" id="floatingInput" placeholder="CVV" required>
+                            <label for="floatingInput">CVV</label>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="d-grid gap-2 col-8">
+                        <button type="submit" class="btn btn-dark btn-block">SUBMIT</button>
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+                <br><br><br><br><br><br><br><br>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+    </form>
+
+{% endblock content %}

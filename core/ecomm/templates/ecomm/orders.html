@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% block title %}My Orders{% endblock title %}
+
+{% block head %}
+
+    <style>
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-family: 'Limelight', cursive;
+            font-weight: 600;
+        }
+
+        .nav-item {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        h2 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+            font-size: 2rem;
+        }
+
+        h3 {
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #000;
+        }
+    </style>
+
+{% endblock head %}
+
+{% block content %}
+
+    {% include 'nav.html' %}
+
+    <div class="container-fluid row p-3 px-5">
+        <h1>My Orders</h1>
+        <div class="col-lg-10">
+            <hr>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for items in order %}
+                <div class="col">
+                    <a href="/product/{{items.product.id}}/">
+                        <div class="card h-100">
+                            <img src={{items.product.img1.url}}
+                                class="card-img-top p-3" alt="...">
+                            <div class="card-body">
+                                <h3 class="card-title">{{items.product.title}}</h3>
+                                <p class="card-text">Quantity: {{items.quantity}} &emsp; Order Date: {{items.date}}</p>
+                            </div>
+                            <div class="card-footer">
+                                <strong>Price: $ {{items.price}}</strong>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+            </div>
+            <div class="col-lg-2"></div>
+        </div>
+        
+    </div>
+    <br><br><br>
+
+{% endblock content %}

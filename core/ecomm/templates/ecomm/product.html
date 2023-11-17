@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+
+{% block title %} Product Detail {% endblock title %}
+
+{% block head %}
+    <style>
+        /* font-family: 'Cormorant Garamond', serif;
+         font-family: 'Open Sans', sans-serif;
+        font-family: 'Poppins', sans-serif; */
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .display-1{
+            font-size: 3rem;
+        }
+
+        h2 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 300;
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 992px) {
+            h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        h3 {
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-family: 'Limelight', cursive;
+            font-weight: 600;
+        }
+
+        .nav-item {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .carousel-inner div img {
+            margin: auto;
+        }
+
+        .carousel-control-prev-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+        }
+
+        .carousel-control-next-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+        }
+
+        .display-6{
+            font-size: 30px;
+        }
+
+    </style>
+{% endblock head %}
+
+{% block content %}
+    
+    {% include 'nav.html' %}
+    {% load cart %}
+
+    <div class="container-fluid row mb-5">
+        <div class="container-fluid col-xl-7">
+            <div id="carouselExampleIndicators" class="carousel slide p-md-4" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                        class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="{{ prod.img1.url }}"
+                            class="d-block w-50" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{ prod.img2.url }}"
+                            class="d-block w-50" alt="...">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="{{ prod.img3.url }}"
+                            class="d-block w-50" alt="...">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+        <div class="container-fluid col-xl-5 p-md-4">
+            <h1 class="display-1">{{ prod.title }}</h1>
+            <h2>{{ prod.desc }}</h2>
+            <br>
+            <h3 class="lead">Price:&nbsp;&nbsp;<strong>${{ prod.price }}</strong></h3>
+            <br>
+            <h3 class="lead">
+                Size:&nbsp;&nbsp;<strong>{{ prod.size }}</strong>
+                <!--<div class="btn-group" role="group" aria-label="Select your size:">
+                    <input type="radio" class="btn-check" name="btnradio" id="small" value="S" autocomplete="off">
+                    <label class="btn btn-outline-dark" for="small">S</label>
+                  
+                    <input type="radio" class="btn-check" name="btnradio" id="medium" value="M" autocomplete="off">
+                    <label class="btn btn-outline-dark" for="medium">M</label>
+                  
+                    <input type="radio" class="btn-check" name="btnradio" id="large" value="L" autocomplete="off">
+                    <label class="btn btn-outline-dark" for="large">L</label>
+
+                    <input type="radio" class="btn-check" name="btnradio" id="xtra-large" value="XL" autocomplete="off">
+                    <label class="btn btn-outline-dark" for="xtra-large">XL</label>
+                </div>-->
+            </h3> 
+            <br>
+            <div class="row">
+                <div class="p-0 my-2">
+                    {% if prod|is_in_cart:request.session.cart %}
+                    <div class="row p-0">
+                        <form action="" class="col-2" method="POST">{% csrf_token %}
+                            <input hidden type="text" name="to_cart" value="{{ prod.id }}">
+                            <input hidden type="text" name="rem_cart" value="True">
+                            <!-- <input type="submit" value="- " class="col-2 btn btn-dark px-4"> -->
+                            <button type="submit" class="col-2 btn btn-dark pe-5">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="auto" fill="white" class="bi bi-dash" viewBox="0 0 16 16">
+                                    <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                                  </svg>
+                            </button>
+                        </form>
+                        <div class="text-center col display-6">{{prod|cart_count:request.session.cart}} in cart</div>
+                        <form action="" class="col-2" method="POST">{% csrf_token %}
+                            <input hidden type="text" name="to_cart" value="{{ prod.id }}">
+                            <!-- <input type="submit" value="+ " class="col-2 btn btn-dark px-4"> -->
+                            <button type="submit" class="col-2 btn btn-dark pe-5">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="auto" fill="white" class="bi bi-plus" viewBox="0 0 16 16">
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                  </svg>
+                            </button>
+                        </form>    
+                    </div>
+                    {% else %}
+                    <form action="" method="POST">{% csrf_token %}
+                        <input hidden type="text" name="to_cart" value="{{ prod.id }}">
+                        <div class="d-grid gap-2">
+                            <input type="submit"  class="btn btn-dark px-4" value="ADD TO CART">
+                        </div>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+
+{% endblock content %}
+

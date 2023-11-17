@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Thank You For Purchasing{% endblock title %}
+
+{% block head %}
+    <style>
+        body {
+          font-family: 'Poppins', sans-serif;
+        }
+
+        .navbar-brand {
+          font-size: 1.8rem;
+          font-family: 'Limelight', cursive;
+          font-weight: 600;
+        }
+
+        .nav-item {
+          font-family: 'Poppins', sans-serif;
+        }
+
+
+        h1 {
+          font-family: 'Cormorant Garamond', serif;
+        }
+    </style>
+{% endblock head %}
+
+{% block content %}
+
+    {% include 'nav.html' %}
+
+    <div class="jumbotron text-center">
+        <h1 class="display-3">Thank You for Purchasing!</h1>
+        <p class="lead">Your order is being processed</p>
+        <hr>
+        <!-- <p>
+            Having trouble? <a href="">Contact us</a>
+        </p> -->
+        <p class="lead">
+            <a class="btn btn-dark btn-md" href="{% url 'home' %}" role="button">Continue to Homepage</a>
+        </p>
+    </div>
+
+{% endblock content %}
